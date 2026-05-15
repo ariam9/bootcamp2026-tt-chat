@@ -86,7 +86,7 @@ std::string read_args(int argc, char *argv[]) {
   else if (argc == 2) {
     message = argv[1];
   } else {
-    std::cout << "usage: " << argv[0] << "(optional)<message>" << std::endl;
+    std::cout << "usage: " << argv[0] << " (optional)<message>" << std::endl;
     exit(EXIT_FAILURE);
   }
   return message;

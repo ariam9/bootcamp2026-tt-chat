@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
   else if (argc == 2) {
     message = argv[1];
   } else {
-    std::cout << "usage: " << argv[0] << "(optional)<message>" << std::endl;
+    std::cout << "usage: " << argv[0] << " (optional)<message>" << std::endl;
     return 1;
   }
   //lhs is const int, rhs is an integer literal -> const variables need to be defined on declaration, and an integer literal can be used for this

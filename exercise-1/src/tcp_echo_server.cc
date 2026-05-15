@@ -60,7 +60,7 @@ int main() {
     send(new_sock, buffer, read_size, 0);
     std::cout << "Echo message sent" << "\n";
 
-    //fix for closing socket out loop(leaking FDs otherwise :/)
+    //fix for closing socket outside loop(leaking FDs otherwise :/)
     close(new_sock);
   }
   // Close the socket
