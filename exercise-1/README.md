@@ -30,8 +30,24 @@ the best way to learn all of these would be by using the concepts on a practical
 
 3. **Reflect on how it went.** Honestly:
    - Did your self-directed learning actually prepare you for the questions, or did you over-study things that never came up?
+   ```
+   some things were very directly related to what i read/studied about, a bunch of stuff i studied related to git and make didn't get covered in the questions and there were also some ideas which i had not studied about while preparing for the questions.
+   ```
    - Which questions blindsided you? Why — was the topic missing from your plan, or did you skim past it?
+   ```
+   the concepts about different types of builds was something that i didn't really pay attention to while studying about g++ and make, but i could infer what they might be about from information i already had.
+
+   using vscode to build projects was also something that i was not familiar with since im way more used to working on code in command line editors or basic text editors like kate(on my os). vscode is really nice for markdown files though.
+   ```
    - Map your experience onto the *known knowns / known unknowns / unknown unknowns* idea. The interesting category is usually the last one: things you didn't even realise you should have learned. What were yours, and how could a better learning plan have surfaced them earlier?
+   ```
+   known knowns -> most ideas about g++, git, make
+   known unknowns -> other than the basic socket related stuff covered in the first few chapters of beej, im not really familiar with network programming. also, even currently, some cpp memory management-related paradigms are unfamiliar to me.
+
+   unknown unknowns -> build types, profiling(had to look this up), a bunch of git with multiple branches related commands(you might notice the lack of them in my git answer)
+
+   a big reason for not covering these topics was time mismanagement, if i had spent a bit more time planning what to learn and executed the plan in its entirety, it would have led to a better outcome
+   ```
 
 The point of this exercise isn't to get the questions "right" — it's to notice the gap between how you *think* you learn and how you actually do, so you can
 close it.
