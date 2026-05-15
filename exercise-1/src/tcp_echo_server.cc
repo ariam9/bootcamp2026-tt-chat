@@ -46,16 +46,24 @@ int main() {
       return -1;
     }
     // Wait for read
-    ssize_t read_size = read(new_sock, buffer, kBufferSize);
     //fix for changed client messages
+    ssize_t read_size = read(new_sock, buffer, kBufferSize-1);
+    if (read_size < 0) {
+      std::cerr << "read error \n";
+      close(new_sock);
+      continue;
+    }
+
     buffer[read_size] = '\0';
     std::cout << "Received: " << buffer << "\n";
     // Send reply
     send(new_sock, buffer, read_size, 0);
     std::cout << "Echo message sent" << "\n";
+
+    //fix for closing socket out loop(leaking FDs otherwise :/)
+    close(new_sock);
   }
   // Close the socket
-  close(new_sock);
   close(my_sock);
   return 0;
 }
