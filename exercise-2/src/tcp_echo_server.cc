@@ -67,11 +67,25 @@ void setup_server_socket(int my_socket, sockaddr_in &address) {
 
 void handle_accept(int client_socket) {
   char buffer[kBufferSize] = {0};
-  ssize_t valread = read(client_socket, buffer, kBufferSize);
+  //using recv instead of read
+  ssize_t valread = recv(client_socket, buffer, kBufferSize-1, 0);
 
   if (valread > 0) {
+    buffer[valread] = '\0';
     std::cout << "Received: " << buffer << "\n";
-    send(client_socket, buffer, valread, 0);
+
+    ssize_t total_sent = 0;
+    while (total_sent < valread) {
+      ssize_t sent = send(client_socket, buffer + total_sent,
+                          valread - total_sent, 0);
+
+      if (sent < 0) {
+        std::cerr << "Send error on client socket " << client_socket << "\n";
+        break;
+      }
+
+      total_sent += sent;
+    }
     std::cout << "Echo message sent\n";
   } else if (valread == 0) {
     std::cout << "Client disconnected.\n";
