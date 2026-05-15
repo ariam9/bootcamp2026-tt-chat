@@ -24,7 +24,7 @@ void set_binary_address(sockaddr_in &address, const std::string &server_ip) {
 }
 
 sockaddr_in create_address(const std::string &server_ip, int port) {
-  sockaddr_in address;
+  sockaddr_in address{};
   address.sin_family = AF_INET;
   address.sin_port = htons(port);
 
