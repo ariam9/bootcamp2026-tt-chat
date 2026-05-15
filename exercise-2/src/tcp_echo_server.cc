@@ -57,7 +57,7 @@ void listen_on_socket(int sock) {
   }
 }
 
-void start_listening_on_socket(int my_socket, sockaddr_in &address) {
+void setup_server_socket(int my_socket, sockaddr_in &address) {
   const int kSocketOptions = 1;
   set_socket_options(my_socket, kSocketOptions);
 
@@ -106,7 +106,7 @@ int main() {
 
   // #Question - is there a better name for this function?
   //maybe setup_server_socket is a better name since it sets socket options, binds and then starts listening
-  start_listening_on_socket(my_socket, address);
+  setup_server_socket(my_socket, address);
   std::cout << "Server listening on port " << kPort << "\n";
   handle_connections(my_socket, kPort);
   close(my_socket);
