@@ -86,6 +86,7 @@ void handle_accept(int client_socket) {
 
       total_sent += sent;
     }
+    
     std::cout << "Echo message sent\n";
   } else if (valread == 0) {
     std::cout << "Client disconnected.\n";

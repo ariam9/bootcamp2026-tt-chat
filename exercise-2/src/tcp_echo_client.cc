@@ -47,12 +47,27 @@ void send_and_receive_message(int sock, const std::string &message) {
   char buffer[kBufferSize] = {0};
 
   // Send the message to the server
-  send(sock, message.c_str(), message.size(), 0);
+  ssize_t total_sent = 0;
+  ssize_t valsend = message.size();
+  while (total_sent < valsend) {
+    ssize_t sent = send(sock, message.c_str() + total_sent,
+                        valsend - total_sent, 0);
+
+    if (sent < 0) {
+      std::cerr << "Send error on server socket " << sock << "\n";
+      break;
+    }
+
+    total_sent += sent;
+  }
+  
   std::cout << "Sent: " << message << "\n";
 
   // Receive response from the server
-  ssize_t read_size = read(sock, buffer, kBufferSize);
+  //using recv instead of read
+  ssize_t read_size = recv(sock, buffer, kBufferSize-1, 0);
   if (read_size > 0) {
+    buffer[read_size] = '\0';
     std::cout << "Received: " << buffer << "\n";
   } else if (read_size == 0) {
     std::cout << "Server closed connection.\n";
