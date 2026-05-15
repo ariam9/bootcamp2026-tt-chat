@@ -34,7 +34,7 @@ bool set_socket_options(int sock, int opt) {
 }
 
 sockaddr_in create_address(int port) {
-  sockaddr_in address;
+  sockaddr_in address{};
   address.sin_family = AF_INET;
   address.sin_addr.s_addr = INADDR_ANY;
   address.sin_port = htons(port);
