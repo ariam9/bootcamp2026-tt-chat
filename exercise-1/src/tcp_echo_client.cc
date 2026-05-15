@@ -8,11 +8,16 @@
 
 int main() {
   // #Question - are these the same type?
+  //lhs is an std::string, rhs is a cstring literal -> not the same type but std::string can be initialised from cstring literals
   std::string message = "Hello from client";
+  //lhs is const int, rhs is an integer literal -> const variables need to be defined on declaration, and an integer literal can be used for this
   const int kPort = 8080;
+  //lhs is a const std::string, rhs is a cstring literal(same as 1st example)
   const std::string kServerAddress = "127.0.0.1";
   sockaddr_in address;
+  //same as in the case of kPort
   const int kBufferSize = 1024;
+  //lhs is a char array of size kBufferSize, rhs is an initializer list which tells to initialise the char array with all 0s
   char buffer[kBufferSize] = {0};
   // Creating socket file descriptor
   int my_sock = socket(AF_INET, SOCK_STREAM, 0);
