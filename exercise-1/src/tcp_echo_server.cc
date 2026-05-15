@@ -47,6 +47,8 @@ int main() {
     }
     // Wait for read
     ssize_t read_size = read(new_sock, buffer, kBufferSize);
+    //fix for changed client messages
+    buffer[read_size] = '\0';
     std::cout << "Received: " << buffer << "\n";
     // Send reply
     send(new_sock, buffer, read_size, 0);
