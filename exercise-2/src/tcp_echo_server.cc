@@ -16,12 +16,20 @@ int create_socket() {
 }
 
 bool set_socket_options(int sock, int opt) {
-  if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,
+  if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &opt,
                  sizeof(opt)) < 0) {
     std::cerr << "setsockopt() error\n";
     close(sock);
     exit(EXIT_FAILURE);
   }
+
+  if (setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &opt,
+                 sizeof(opt)) < 0) {
+    std::cerr << "setsockopt() error\n";
+    close(sock);
+    exit(EXIT_FAILURE);
+  }
+  
   return true;
 }
 
