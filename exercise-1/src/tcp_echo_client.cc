@@ -6,10 +6,17 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int main() {
+int main(int argc, char* argv[]) {
   // #Question - are these the same type?
   //lhs is an std::string, rhs is a cstring literal -> not the same type but std::string can be initialised from cstring literals
   std::string message = "Hello from client";
+  if (argc == 1) {} 
+  else if (argc == 2) {
+    message = argv[1];
+  } else {
+    std::cout << "usage: " << argv[0] << "(optional)<message>" << std::endl;
+    return 1;
+  }
   //lhs is const int, rhs is an integer literal -> const variables need to be defined on declaration, and an integer literal can be used for this
   const int kPort = 8080;
   //lhs is a const std::string, rhs is a cstring literal(same as 1st example)
