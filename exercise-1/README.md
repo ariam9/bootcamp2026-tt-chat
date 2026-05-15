@@ -29,17 +29,11 @@ the best way to learn all of these would be by using the concepts on a practical
    from what you've internalised.
 
 3. **Reflect on how it went.** Honestly:
-   - Did your self-directed learning actually prepare you for the questions, or
-     did you over-study things that never came up?
-   - Which questions blindsided you? Why — was the topic missing from your
-     plan, or did you skim past it?
-   - Map your experience onto the *known knowns / known unknowns / unknown
-     unknowns* idea. The interesting category is usually the last one: things
-     you didn't even realise you should have learned. What were yours, and how
-     could a better learning plan have surfaced them earlier?
+   - Did your self-directed learning actually prepare you for the questions, or did you over-study things that never came up?
+   - Which questions blindsided you? Why — was the topic missing from your plan, or did you skim past it?
+   - Map your experience onto the *known knowns / known unknowns / unknown unknowns* idea. The interesting category is usually the last one: things you didn't even realise you should have learned. What were yours, and how could a better learning plan have surfaced them earlier?
 
-The point of this exercise isn't to get the questions "right" — it's to notice
-the gap between how you *think* you learn and how you actually do, so you can
+The point of this exercise isn't to get the questions "right" — it's to notice the gap between how you *think* you learn and how you actually do, so you can
 close it.
 
 ## Learning How to Learn
@@ -47,8 +41,17 @@ close it.
 - Answer the following questions in this file and commit and push your changes.  
 - Bonus sections are more difficult and optional.
 - How can you find the information required to complete these tasks?
+```
+by looking through guides, man entries and other sources of information available online
+```
 - How can you tell if the source of your information is good?
+```
+the source should either be official(man entries, gnu websites, etc) or reference these official sources
+```
 - How would you define "good" in this situation?
+```
+a source is good if it provides verifiably correct information in a well-structured and digestible manner
+```
 
 ## Learn Basics of g++ CLI
 
@@ -268,29 +271,99 @@ we can use getaddrinfo(defined in <netdb.h>) to get a linked list of possible ad
 
 - What is happening in line 26 of `tcp-echo-client.cc`? 
   `if (inet_pton(AF_INET, kServerAddress.c_str(), &address.sin_addr) <= 0) {`
+```
+inet_pton returns:
+1 -> success
+0 -> given cstring doesn't represent a valid address in the given family/invalid address under given family
+-1 -> given family is not supported/invalid family
+
+so the if statement is just error handling for these cases
+```
 - What is happening in line 31 of `tcp-echo-client.cc`?
   `if (connect(my_sock, (sockaddr *)&address, sizeof(address)) < 0) {`
+```
+connect returns:
+0 -> successful connection
+-1 -> error encountered during connection
+
+so the if statement is just error handling for these cases
+```
 - What is the difference between a pointer and a reference?
+```
+a pointer is just a variable storing a memory address
+a reference is an alias for an already existing variable or object
+```
 - When is it better to use a pointer?
+```
+since pointers can be null(and can be checked for being null), they should be used in situations where one might not be sure that a valid object is returned
+also pointers can be reassigned to other addresses
+```
 - When is it better to use a reference?
+```
+a reference shouldn't be null(undefined behaviour) and nor can it be reassigned/rebound to a different object and so, it should be used for efficiency/more concise code only for objects which are guaranteed to satisy these requirements
+
+references are usually used to prevent passing values by copying which is inefficient for larger objects and impossible for some objects(like unique_ptr) which cannot be copied
+```
 - What is the difference between `std::string` and a C-style string?
+```
+an std::string is an stl class which manages its memory automatically. it is mutable(unless const). also it supports many operations like concatenation, efficient length queries, etc.
+
+a c-style string is a sequence of characters, terminated by a null byte('\0'). it can be stored in a character array(mutable in this case), be referred to by a char* but actually stay in the .data section(string literals - immutable), etc. its length is not stored and thus it has to be scanned until '\0' is encountered.
+```
 - What type is a C-style string?
+```
+either a char array(char[]) or a char*, depending on how it was created/how it's being accessed.
+```
 - What happens when you iterate a pointer?
+```
+when you iterate a pointer, you get a pointer which points to an address = old address + size of pointer type
+
+for example, if a is an int* then a+1 will increment the address by 4 bytes since int is a 4 bytes datatype(usually)
+```
 - What are the most important safety tips to know when using pointers?
+```
+1. don't dereference nullptr(check before if it has a chance to be a nullptr)
+2. don't access out of bounds memory using pointers(it's undefined behaviour)
+3. don't change pointer type arbitrarily to access fields members
+```
 
 ## Learn Basics of Creating a C++ Project in Your IDE
 
 - How do you compile and run your project in your IDE?
+```
+on the command line, just use g++ and run directly or for larger projects, use a makefile or set up build tasks on vscode to run commands for you
+```
 
 ## Improving Interactions with LLMs
 
-- What is the most authoritative source of information about `socket()`
-  from `<sys/socket.h>`?
-- What is the most authoritative source of information about the TCP and IP
-  protocols?
-- What is the most authoritative source of information about the C++
-  programming language?
-- What information can you find about using Markdown when structuring prompts 
-  to LLMs?
+- What is the most authoritative source of information about `socket()` from `<sys/socket.h>`?
+```
+https://man7.org/linux/man-pages/man2/socket.2.html
+```
+- What is the most authoritative source of information about the TCP and IP protocols?
+```
+TCP - https://datatracker.ietf.org/doc/html/rfc793
+IP - https://datatracker.ietf.org/doc/html/rfc791
+```
+- What is the most authoritative source of information about the C++ programming language?
+```
+https://isocpp.org/std/the-standard
+```
+- What information can you find about using Markdown when structuring prompts to LLMs?
+```
+since LLMs were trained on a large scale on many .md files, they are great at understanding and making use of instructions based on this format.
+
+instead of dropping a wall of text at an LLM, it is more effective to use a .md file with different sections of things under different headings(marked by # or ## to specify scale).
+
+using bullet points and other formatting tricks in the .md-style inputs also helps the llm get more context and will usually result in better/more meaningful responses.
+```
 - What is the difference between LLM and AI?
+```
+AI as a concept has existed long before LLMs gained popularity. the whole concept of teaching machines to learn from data/give outputs based on prior is how the field of AI/ML came into existence.
+
+on the other hand, LLMs are usually transformer-based models that are trained on a large amount of text data to understand natural language. the ones which have been trained on such an enormous amount of data that they can find relationships and reason using natural language are dubbed foundation models and specialisations of these are the basis of commerical ai usage currently(in the language-based fields at least). 
+```
 - Is it grammatically correct in English to say "a LLM" or "an LLM"? Why?
+```
+an LLM(LLM is pronounced as el el em, so it should be an and not a)
+```
