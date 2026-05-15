@@ -1,0 +1,15 @@
+all: build/server build/client
+
+build/server: tcp_echo_server.cc
+	mkdir -p build
+	g++ -o build/server tcp_echo_server.cc
+
+build/client: tcp_echo_client.cc
+	mkdir -p build
+	g++ -o build/client tcp_echo_client.cc
+
+clean:
+	rm -rf build
+
+#if you make a file called clean, then make clean still works because it's a phony target
+.PHONY: clean

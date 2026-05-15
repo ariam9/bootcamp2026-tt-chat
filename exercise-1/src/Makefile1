@@ -1,0 +1,13 @@
+all: server client
+
+server: tcp_echo_server.cc
+	g++ -o server tcp_echo_server.cc
+
+client: tcp_echo_client.cc
+	g++ -o client tcp_echo_client.cc
+
+clean:
+	rm -f server client
+
+#if you make a file called clean, then make clean still works because it's a phony target
+.PHONY: clean
