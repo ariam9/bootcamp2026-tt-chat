@@ -79,7 +79,7 @@ void handle_connections(int sock, int port) {
 
   // #Question - is it good to have an infinite loop?
   //if the server is supposed to run forever, then it's fine
-  //but there should be a way for the server to terminate elegantly
+  //but there should be a way for the server to terminate gracefully
   while (true) {
     int accepted_socket = accept(sock, (sockaddr *)&address, &address_size);
     if (accepted_socket < 0) {
