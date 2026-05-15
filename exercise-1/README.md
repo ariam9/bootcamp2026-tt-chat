@@ -177,9 +177,46 @@ run, clean, check, format
 - Commit and push your changes to git
 - Each commit should be responding to a single task or question
 - Why is it important to keep your commit to a single task or question?
-- Is it better to have a lot of very small commits, or one big commit when 
-  everything is working?
+```
+this is so that in case that the changes made in commit(for that particular task or question) need to be reverted, it can be done cleanly without affecting other unconnected changes
+```
+- Is it better to have a lot of very small commits, or one big commit when everything is working?
+```
+it is better to have a lot of very small commits(not too small also though since that would get tedious).
+in general, each commit should encapsulate a particular meaningful change made to the codebase.
+```
 - What are the most important commands to know in git?
+```
+from the beginning:
+init
+clone
+
+checking history and status:
+diff
+status
+log
+
+adding and committing:
+add
+commit
+
+branches:
+branch
+switch, checkout 
+merge
+rebase
+
+remote repos:
+remote(add, -v, etc)
+fetch
+pull(fetch + merge)
+push
+
+undoing:
+revert(reverts to a given commit)
+restore(remove staged/unstaged changes)
+reset(move HEAD pointer and stage/unstage/completely remove changes from skipped over commits)
+```
 
 ## Introduction to Sockets
 
