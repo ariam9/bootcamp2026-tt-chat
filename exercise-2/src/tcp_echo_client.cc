@@ -44,7 +44,7 @@ void send_and_receive_message(int sock, const std::string &message) {
   const int kBufferSize = 1024;
   // #Question - is buffer the best name we can use?
   //maybe something like response_buffer is a better name?
-  char buffer[kBufferSize] = {0};
+  char response_buffer[kBufferSize] = {0};
 
   // Send the message to the server
   ssize_t total_sent = 0;
@@ -65,10 +65,10 @@ void send_and_receive_message(int sock, const std::string &message) {
 
   // Receive response from the server
   //using recv instead of read
-  ssize_t read_size = recv(sock, buffer, kBufferSize-1, 0);
+  ssize_t read_size = recv(sock, response_buffer, kBufferSize-1, 0);
   if (read_size > 0) {
-    buffer[read_size] = '\0';
-    std::cout << "Received: " << buffer << "\n";
+    response_buffer[read_size] = '\0';
+    std::cout << "Received: " << response_buffer << "\n";
   } else if (read_size == 0) {
     std::cout << "Server closed connection.\n";
   } else {
@@ -82,12 +82,12 @@ void send_and_receive_message(int sock, const std::string &message) {
 //should be able to accept no arguments(argc = 1), then use the default initialisation of message in that case
 std::string read_args(int argc, char *argv[]) {
   std::string message = "Hello from client";
-  if (argc == 1) {
-    std::cout << "Usage: " << argv[0] << " <message>\n";
-    exit(EXIT_FAILURE);
-  }
-  if (argc > 1) {
+  if (argc == 1) {} 
+  else if (argc == 2) {
     message = argv[1];
+  } else {
+    std::cout << "usage: " << argv[0] << "(optional)<message>" << std::endl;
+    exit(EXIT_FAILURE);
   }
   return message;
 }
