@@ -224,14 +224,45 @@ reset(move HEAD pointer and stage/unstage/completely remove changes from skipped
   message sent using command line arguments
 - **Example**: `./client "hello message from the command prompt"` should send
   `"hello message from the command prompt"` to the server
+```
+making client changes is fine but the way the server processes sockets and put their messages into the buffer has problems:
+firstly after accepting the connection and processing the communication, the socket should be closed
+secondly, a new socket should get a new buffer rather than overwriting from the beginning into the old buffer, or the old buffer can be reused by putting a nullbyte at the end of the new message so that only that message gets printed out
+```
 - Commit your changes into git
 - What do all these headers do?
+```
+<arpa/inet.h> -> unix header file that offers functions to convert things to network byte order and convert between presentation and network formats of ip addresses, etc
+<iostream> -> offers stdio-related functionality like std::cout, std::cin, etc
+<netinet/in.h> -> provides protocol related structures, constants, etc
+<string> -> offers std::string, a mutable string container
+<sys/socket.h> -> provides key socket functionality like socket, connect, bind, etc
+<sys/types.h> -> defines system related types
+<unistd.h> -> provides access to posix os apis(system call wrappers)
+```
 - How do you find out which part of the below code comes from which header?
-- How do you change the code so that you are sending messages to servers
-  other than localhost?
+```
+for particular functions, their man entry(man7.org) lists which header they come from as well as their function declaration
+
+other thing that can be done is to run the preprocessor(with -E) and figure out which include brings what part of the code from the output
+```
+- How do you change the code so that you are sending messages to servers other than localhost?
+```
+if the server's ip address is known, simply take it as input and replace kServerAddress with that input
+```
 - How do you change the code to send to a IPv6 address instead of IPv4?
-- **Bonus**: How do you change the client code to connect by hostname instead
-  of IP address?
+```
+sockaddr_in -> sockaddr_in6
+AF_INET -> AF_INET6 (socket and inet_pton can handle it with this)
+sin_port -> sin6_port
+sin_addr -> sin6_addr
+sin_family -> sin6_family
+"127.0.0.1" -> "::1" (localhost/loopback on ipv6)
+```
+- **Bonus**: How do you change the client code to connect by hostname instead of IP address?
+```
+we can use getaddrinfo(defined in <netdb.h>) to get a linked list of possible addr_info(based on hostname, port and other hints), from which we can extract the sockaddr we want, to connect to a particular server by its hostname rather than its IP address
+```
   
 ## Introduction to Memory Management
 
